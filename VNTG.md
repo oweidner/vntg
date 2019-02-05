@@ -1,3 +1,31 @@
+# Compile Me Script...
+
+VNTG_PREFIX="/opt/vntg/"
+
+
+######
+PACKAGE_NAME="libressl"
+PACKAGE_VERSION="2.9.0"
+CONFIGURE_FLAGS="--enable-nc"
+CONFIGURE_64="./configure --prefix=$VNTG_PREFIX/packages/$PACKAGE_NAME/$PACKAGE_VERSION --libdir=$VNTG_PREFIX/packages/$PACKAGE_NAME/$PACKAGE_VERSION/lib64 $CONFIGURE_FLAGS"
+CONFIGURE_32="./configure --prefix=$VNTG_PREFIX/packages/$PACKAGE_NAME/$PACKAGE_VERSION --libdir=$VNTG_PREFIX/packages/$PACKAGE_NAME/$PACKAGE_VERSION/lib $CONFIGURE_FLAGS"
+
+$CONFIGURE_64
+make
+make install
+
+#####
+PACKAGE_NAME="openssh"
+PACKAGE_VERSION="7.9p1"
+CONFIGURE_FLAGS="--with-ssl-dir=/opt/vntg/packages/libressl/2.9.0/ --with-pam --with-xauth"
+CONFIGURE_64="./configure --prefix=$VNTG_PREFIX/packages/$PACKAGE_NAME/$PACKAGE_VERSION --libdir=$VNTG_PREFIX/packages/$PACKAGE_NAME/$PACKAGE_VERSION/lib64 $CONFIGURE_FLAGS"
+CONFIGURE_32="./configure --prefix=$VNTG_PREFIX/packages/$PACKAGE_NAME/$PACKAGE_VERSION --libdir=$VNTG_PREFIX/packages/$PACKAGE_NAME/$PACKAGE_VERSION/lib $CONFIGURE_FLAGS"
+
+
+
+# SET 64-bit (n64) compiler options
+# SET 32-bit (n32) compiler options
+
 mkdir -p /opt/vntg/etc/
 mkdir -p /opt/vntg/bin/
 mkdir -p /opt/vntg/sbin/
@@ -15,7 +43,9 @@ mkdir -p /opt/vntg/share/man/man8/
 export PKG_CONFIG="/opt/vntg/bin/pkg-config"
 export LDFLAGS="-L/opt/vntg/lib/"
 export CFLAGS="-I/opt/vntg/include/"
-
+export CXXFLAGS=$CFLAGS
+export LD_LIBRARY_PATH='/opt/vntg/lib'
+export LDFLAGS='-L/opt/vntg/lib'
 
 # package: pkg-config-0.29.2
 # source: https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
