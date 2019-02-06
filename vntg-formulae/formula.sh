@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 echo '____   ______________________________ '
 echo '\   \ /   /\      \__    ___/  _____/ '
 echo ' \   Y   / /   |   \|    | /   \  ___ '
@@ -7,20 +8,24 @@ echo '  \     / /    |    \    | \    \_\  \'
 echo '   \___/  \____|__  /____|  \______  /'
 echo '                  \/               \/ '
 
-file="$1"
+FORMULAE="/Users/dkolewei/vntg/vntg-formulae"
 
-if [ -f "$file" ]
+# Find and prse the formula file
+if [ -f "${FORMULAE}/${1}" ]
 then
   echo "$file found."
 
   while IFS='=' read -r key value
   do
+    # skip empty lines
+    [ -z $key ] && continue
+
     key=$(echo $key | tr '.' '_')
     eval ${key}=\${value}
-  done < "$file"
+  done < "${FORMULAE}/${1}"
 
-  echo "\PACKAGE INFO"
-  echo "==================="
+  echo "\nBuilding package:"
+  echo "================="
   echo "Package Name     = " ${package_name}
   echo "Package Version  = " ${package_version}
   echo "Package Location = " ${package_location}
@@ -28,7 +33,21 @@ then
 
 else
   echo "$file not found."
+  exit -1
 fi
+
+do_check_dep() {
+    _name=$1
+    _version=$2
+
+    if [ -d "/opt/vntg/pkg/${_name}/${_version}" ]; then
+        # TODO: Check if packages is linked properly into /opt/vntg.
+        #       If not, suggest to run 'vntg relink'
+        return 0
+    else
+        return 1
+    fi
+}
 
 do_source_get () {
     source_location=$1
@@ -62,17 +81,33 @@ do_source_build () {
     name=$1
     version=$2
     cd /opt/vntg/src/${package_name}/${package_version}
-    make
-    make install
+    # make
+    # make install
     #make clean
+
+    # copy build file to .vntg
+    mkdir /opt/vntg/pkg/${package_name}/${package_version}/.vntg/
+    cp ${FORMULAE}/$file /opt/vntg/pkg/${package_name}/${package_version}/.vntg/
 }
 
 do_package () {
     name=$1
     version=$2
 
+    # copy build file to .vntg
+    mkdir /opt/vntg/pkg/${package_name}/${package_version}/.vntg/
+    cp ${FORMULAE}/$file /opt/vntg/pkg/${package_name}/${package_version}/.vntg/
+
+    # create archive
     cd /opt/vntg/pkg/
     tar cfz vntg-${name=}-${version}.tgz ${name=}/${version}
+
+    for miscfile in $(echo ${pacakge_src_build_copyfiles} | sed "s/,/ /g")
+    do
+        # copy the file to distribution directory
+        cp /opt/vntg/src/${package_name}/${package_version}/${miscfile} /opt/vntg/pkg/${package_name}/${package_version}/
+    done
+
 }
 
 do_install_from_source () {
@@ -83,6 +118,7 @@ do_install_from_source () {
 
 # Strip leading and trailing whitespaces
 package_name=$(echo ${package_name} | sed -e 's/^ *//g;s/ *$//g')
+package_deps=$(echo ${package_deps} | sed -e 's/^ *//g;s/ *$//g')
 package_version=$(echo ${package_version} | sed -e 's/^ *//g;s/ *$//g')
 package_src_build_configure=$(echo ${package_src_build_configure} | sed -e 's/^ *//g;s/ *$//g')
 package_src_location=$(echo ${package_src_location} | sed -e 's/^ *//g;s/ *$//g')
@@ -91,9 +127,22 @@ package_src_location=$(echo ${package_src_location} | sed -e 's/^ *//g;s/ *$//g'
 # for each dependecy, do the following:
 # 1. check if depdent package is installed
 
+for dep in $(echo $package_deps | sed "s/,/ /g")
+do
+    # split dependency into name and version
+    dep_name=$(echo $dep | cut -f1 -d-)
+    dep_version=$(echo $dep | cut -f2 -d-)
+
+    if ! do_check_dep $dep_name $dep_version; then
+        echo "Dependency ${dep} is missing"
+        exit 1
+    else
+        echo "Dependency ${dep} found"
+fi
+done
+
 do_source_get ${package_src_location} ${package_name} ${package_version}
-do_source_configure ${package_name} ${package_version} ${package_src_build_configure}
-do_source_build ${package_name} ${package_version}
+#do_source_configure ${package_name} ${package_version} ${package_src_build_configure}
+#do_source_build ${package_name} ${package_version}
 do_package ${package_name} ${package_version}
 
-cd -
