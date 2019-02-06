@@ -1,0 +1,17 @@
+package.name        = openssh
+package.description = OpenBSD freely-licensed SSH connectivity tools
+package.version     = 7.9p1
+package.location    = http://localhost:8000/vntg/openssh-7.9p1.tgz"
+package.variants    = n32,n64
+package.deps        = libressl
+
+package.src.location        = https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.9p1.tar.gz
+package.src.build.configure = --with-ssl-dir=/opt/vntg/pkg/libressl/2.9.0/ --with-pam --with-xauth
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+
+
+# NEVER REMOVE THIS LINE
+
