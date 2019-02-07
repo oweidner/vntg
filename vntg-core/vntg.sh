@@ -1,17 +1,24 @@
 #/bin/sh
 
+. ./lib/vntg_build.sh
 . ./lib/config.sh
 . ./lib/help.sh
 . ./lib/search.sh
 . ./lib/update.sh
-
 
 VINTAGE_VERSION="0.1.0"
 VINTAGE_PREFIX="/opt/vintage"
 
 VINTAGE_ROOT="/opt/vintage/"
 VINTAGE_REPOSITORY_TYPE="local"
-VINTAGE_REPOSITORY_REPO="/Users/architeuthis/Projects/vintage/repo/"
+VINTAGE_FORMULAE="/Users/dkolewei/vntg/vntg-formulae"
+
+echo '____   ______________________________ '
+echo '\   \ /   /\      \__    ___/  _____/ '
+echo ' \   Y   / /   |   \|    | /   \  ___ '
+echo '  \     / /    |    \    | \    \_\  \'
+echo '   \___/  \____|__  /____|  \______  /'
+echo '                  \/               \/ '
 
 # ANSI escape sequences:
 # http://ascii-table.com/ansi-escape-sequences-vt-100.php
@@ -53,6 +60,9 @@ fi
 
 # The first argument is the mandatory MODE parameter
 case "$1" in
+
+  "build")
+    vntg_build $*;;
 
   "config")
     vintage_config $*;;

@@ -1,5 +1,6 @@
 #/bin/sh
 
+. ./lib/vntg_build.sh
 . ./lib/config.sh
 . ./lib/search.sh
 . ./lib/update.sh
@@ -14,6 +15,9 @@ vintage_help () {
     if test $# -gt 1; then
         shift;
         case "$1" in
+
+            "build")
+                vntg_build_help ;;
 
             "config")
                 vintage_config_help; break ;;
