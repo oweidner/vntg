@@ -6,6 +6,35 @@
 # . ${VNTG_SCRIPT_ROOT}/lib/search.sh
 # . ${VNTG_SCRIPT_ROOT}/lib/update.sh
 
+do_check_formula() {
+    
+    local _formula_name=$1
+
+    if [ ! -f "${FORMULAE}/${1}" ]
+    then
+        echo "$file not found."
+        exit -1
+    else
+        echo "$_formula_name found."
+
+        while IFS='=' read -r key value
+        do
+            # skip empty lines
+            [ -z $key ] && continue
+
+            key=$(echo $key | tr '.' '_')
+            eval ${key}=\${value}
+        done < "${FORMULAE}/${1}"
+
+        echo "\nBuilding package:"
+        echo "================="
+        echo "Package Name     = " ${package_name}
+        echo "Package Version  = " ${package_version}
+        echo "Package Location = " ${package_location}
+        echo "Package Deps     = " ${package_deps}
+    fi
+}
+
 
 # ----------------------------------------------------------------------
 # Display help functions

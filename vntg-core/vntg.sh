@@ -66,7 +66,8 @@ case "$1" in
     vntg_build $*;;
 
   "install")
-    vntg_build $*;;
+    shift;
+    vntg_install $*;;
 
   "config")
     vintage_config $*;;
