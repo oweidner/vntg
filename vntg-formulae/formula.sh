@@ -9,36 +9,41 @@ echo '   \___/  \____|__  /____|  \______  /'
 echo '                  \/               \/ '
 
 FORMULAE="/Users/dkolewei/vntg/vntg-formulae"
+    
+# do_check_formula(): Parse a formula file
+#   - param 1: formula name
+#
+do_check_formula() {
+    local _formula_name=$1
 
-# Find and prse the formula file
-if [ -f "${FORMULAE}/${1}" ]
-then
-  echo "$file found."
+    if [ ! -f "${FORMULAE}/${1}" ]
+    then
+        echo "$file not found."
+        exit -1
+    else
+        echo "$_formula_name found."
 
-  while IFS='=' read -r key value
-  do
-    # skip empty lines
-    [ -z $key ] && continue
+        while IFS='=' read -r key value
+        do
+            # skip empty lines
+            [ -z $key ] && continue
 
-    key=$(echo $key | tr '.' '_')
-    eval ${key}=\${value}
-  done < "${FORMULAE}/${1}"
+            key=$(echo $key | tr '.' '_')
+            eval ${key}=\${value}
+        done < "${FORMULAE}/${1}"
 
-  echo "\nBuilding package:"
-  echo "================="
-  echo "Package Name     = " ${package_name}
-  echo "Package Version  = " ${package_version}
-  echo "Package Location = " ${package_location}
-  echo "Package Deps     = " ${package_deps}
-
-else
-  echo "$file not found."
-  exit -1
-fi
+        echo "\nBuilding package:"
+        echo "================="
+        echo "Package Name     = " ${package_name}
+        echo "Package Version  = " ${package_version}
+        echo "Package Location = " ${package_location}
+        echo "Package Deps     = " ${package_deps}
+    fi
+}
 
 do_check_dep() {
-    _name=$1
-    _version=$2
+    local _name=$1
+    local _version=$2
 
     if [ -d "/opt/vntg/pkg/${_name}/${_version}" ]; then
         # TODO: Check if packages is linked properly into /opt/vntg.
@@ -140,6 +145,9 @@ do
         echo "Dependency ${dep} found"
 fi
 done
+
+do_check_formula $1
+exit
 
 do_source_get ${package_src_location} ${package_name} ${package_version}
 #do_source_configure ${package_name} ${package_version} ${package_src_build_configure}
