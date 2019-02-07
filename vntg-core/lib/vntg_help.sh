@@ -1,15 +1,16 @@
 #/bin/sh
 
-. ./lib/vntg_build.sh
-. ./lib/config.sh
-. ./lib/search.sh
-. ./lib/update.sh
+. ${VNTG_SCRIPT_ROOT}/lib/vntg_build.sh
+. ${VNTG_SCRIPT_ROOT}/lib/vntg_install.sh
+# . ${VNTG_SCRIPT_ROOT}/lib/config.sh
+# . ${VNTG_SCRIPT_ROOT}/lib/search.sh
+# . ${VNTG_SCRIPT_ROOT}/lib/update.sh
 
 
 # ----------------------------------------------------------------------
 # Display help functions
 #
-vintage_help () {
+vntg_help () {
 
     # Disaply help for command specified as argument
     if test $# -gt 1; then
@@ -18,6 +19,9 @@ vintage_help () {
 
             "build")
                 vntg_build_help ;;
+
+            "install")
+                vntg_install_help ;;
 
             "config")
                 vintage_config_help; break ;;

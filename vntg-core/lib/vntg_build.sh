@@ -35,8 +35,8 @@ do_check_formula() {
 
 # ----------------------------------------------------------------------
 # do_check_dep: checks if package exists in the /opt/vntg tree.
-#   o param 1 <name>: package name to check
-#   o param 2 <version>: package version to check
+#  o param 1 <name>: package name to check
+#  o param 2 <version>: package version to check
 #
 do_check_dep() {
     local _name=$1
@@ -204,20 +204,29 @@ done
 }
 
 
+underline=`tput smul`
+nounderline=`tput rmul`
+bold=`tput bold`
+normal=`tput sgr0`
 
 # ----------------------------------------------------------------------
-# Display help for command "update"
+# Display help 
 #
 vntg_build_help () {
-    echo """vntg build [--install] [--verbose] formula:
-    Build formula from source
+    echo """${bold}vntg build${normal} [--install] [--dist] [--verbose] ${underline}formula${normal}:
 
-    formula is the name of the formula to install.
+    Build a formula from source
 
-    If --install is specified and the build was successfull the package 
+    ${underline}formula${normal} is the name of the formula to build.
+
+    If ${bold}--install${normal} is specified and the build was successfull the package 
     is installed (linked) under /opt/vntg. 
 
-    If --verbose (or -v) is passed, print the verification and postinstall steps.
+    If ${bold}--dist${normal} is specified and the build was successfull the package 
+    is compressed into a distribution archive. 
+
+    If ${bold}--verbose${normal} (or -v) is passed, print the output of all build steps
+    to stdout.
     """
     return 0
 }

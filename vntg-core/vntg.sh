@@ -1,15 +1,16 @@
 #/bin/sh
 
-. ./lib/vntg_build.sh
-. ./lib/config.sh
-. ./lib/help.sh
-. ./lib/search.sh
-. ./lib/update.sh
+VNTG_SCRIPT_ROOT=/Users/dkolewei/vntg/vntg-core/
+
+. ${VNTG_SCRIPT_ROOT}/lib/vntg_build.sh
+. ${VNTG_SCRIPT_ROOT}/lib/vntg_install.sh
+. ${VNTG_SCRIPT_ROOT}/lib/vntg_help.sh
+# . ${VNTG_SCRIPT_ROOT}/lib/config.sh
+# . ${VNTG_SCRIPT_ROOT}/lib/search.sh
+# . ${VNTG_SCRIPT_ROOT}/lib/update.sh
 
 VINTAGE_VERSION="0.1.0"
-VINTAGE_PREFIX="/opt/vintage"
-
-VINTAGE_ROOT="/opt/vintage/"
+VINTAGE_ROOT="/opt/vntg/"
 VINTAGE_REPOSITORY_TYPE="local"
 VINTAGE_FORMULAE="/Users/dkolewei/vntg/vntg-formulae"
 
@@ -52,11 +53,11 @@ chdir() {
   cd "$@" >/dev/null || odie "Error: failed to cd to $*!"
 }
 
-if test $VINTAGE_PREFIX = "/" || test $VINTAGE_PREFIX = "/usr"
-then
-  # we don't want to allow these prefixes
-  odie "Refusing to continue at this prefix: $VINTAGE_PREFIX"
-fi
+# if test $VINTAGE_PREFIX = "/" || test $VINTAGE_PREFIX = "/usr"
+# then
+#   # we don't want to allow these prefixes
+#   odie "Refusing to continue at this prefix: $VINTAGE_PREFIX"
+# fi
 
 # The first argument is the mandatory MODE parameter
 case "$1" in
@@ -64,17 +65,20 @@ case "$1" in
   "build")
     vntg_build $*;;
 
+  "install")
+    vntg_build $*;;
+
   "config")
     vintage_config $*;;
   
   "help")
-    vintage_help $*;;
+    vntg_help $*;;
 
   "search")
     vintage_search $*;;
 
-  "update")
-    vintage_update $*;;
+  "install")
+    vntg_build $*;;
 
   "") # If no command is given, the default it 'help'
     vintage_help $*;;
