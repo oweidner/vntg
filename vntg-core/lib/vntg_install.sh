@@ -1,5 +1,6 @@
 #!/bin/sh
 
+. ${VNTG_SCRIPT_ROOT}/lib/vntg_utils.sh
 
 # ----------------------------------------------------------------------
 # _is_installed: returns true if package is installed, false otherwise.
@@ -25,13 +26,14 @@ _is_installed() {
 #  o param 2 <package_version>: package version to get dependencies for
 #
 _get_deps_recursive() {
-    
     local _package_name=$1
     local _package_version=$2
 
     if ! _is_installed ${_package_name} ${_package_version}; then
+        local _file="/Users/dkolewei/vntg/vntg-formulae/${_package_name}.vf" 
+        [ ! -f "${_file}" ] && echo "Formula $_file not found." && exit -1
 
-        local deps=$(grep '^package.deps' "/Users/dkolewei/vntg/vntg-formulae/${_package_name}.vf" | cut -f2 -d=)
+        local deps=$(grep '^package.deps' ${_file} | cut -f2 -d=)
         local dep
         for dep in $(echo $deps | sed "s/,/ /g")
         do
@@ -45,6 +47,30 @@ _get_deps_recursive() {
     fi
 
 }
+
+# ----------------------------------------------------------------------
+# _download_binary_package
+#  o param 1 <package_name>: name of the package to download
+#  o param 2 <package_version>: version of the package to download
+#
+_download_binary_package () {
+    local _package_name=$1
+    local _package_version=$2
+
+    # Make sure file exists
+    local _file="/Users/dkolewei/vntg/vntg-formulae/${_package_name}.vf" 
+    [ ! -f "${_file}" ] \
+        && odie "Formula $_file not found." && exit -1
+
+    # Make sure package.location is defined
+    local _url=$(grep '^package.location' ${_file} | cut -f2 -d=)
+    [ -z ${_url} ] \
+        && odie "package.location not defined in ${_file}" && exit -1
+    
+    echo Downloading package from $_url
+
+}
+
 
 # ----------------------------------------------------------------------
 # Entry point for 'build'
@@ -78,23 +104,24 @@ vntg_install () {
     # Recursively retrieve missing dependencies
     dependency_list=""
     _get_deps_recursive ${package_name} ${package_version}
-    # TODO: Remove last element from list as it is the package itself.
+    # Remove first comma and last element from list as it is the package itself.
+    dependency_list=$(echo $dependency_list | sed "s/,${package_name}//g" | tail -c +2)
 
-
-    echo "Detected missing dependencies for ${package_name}-${package_version}: ${bold} $dependency_list ${normal}"
+    echo "Detected missing dependencies for ${package_name}-${package_version}: ${bold}$dependency_list ${normal}"
     echo
 
     # Install missing dependencies
     local dep
-    for dep in $(echo $dependency_list | sed "s/,/ /g")
+    for dep in $(echo $dependency_list | sed "s/,/ /g" )
     do
-        echo "${bold}==>${normal} Installing ${package_name}-${package_version} dependency ${bold}${dep}${normal}"
+        echo "${TEXT_B}==>${TEXT_R} Installing ${package_name}-${package_version} dependency ${TEXT_B}${dep}${TEXT_R}"
+        _download_binary_package ${dep}
         echo
     done
 
     # Install the requested package
-    echo "${bold}==>${normal} Installing package ${package_name}-${package_version}"
-
+    echo "${TEXT_B}==>${TEXT_R} Installing package ${package_name}-${package_version}"
+    _download_binary_package ${package_name} ${package_version}
 }
 
 
@@ -102,20 +129,14 @@ vntg_install () {
 # Display help 
 #
 vntg_install_help () {
-    echo """${bold}vntg install${normal} [--verbose] ${underline}formula${normal}:
+    echo """${TEXT_B}vntg install${TEXT_R} [--verbose] ${TEXT_U}formula${TEXT_R}:
 
-    Build a formula from source
+    Install a formula as binary package.
 
-    ${underline}formula${normal} is the name of the formula to build.
+    ${TEXT_U}formula${TEXT_R} is the name of the formula to install.
 
-    If ${bold}--install${normal} is specified and the build was successfull the package 
-    is installed (linked) under /opt/vntg. 
-
-    If ${bold}--dist${normal} is specified and the build was successfull the package 
-    is compressed into a distribution archive. 
-
-    If ${bold}--verbose${normal} (or -v) is passed, print the output of all build steps
-    to stdout.
+    If ${TEXT_B}--verbose${TEXT_R} (or -v) is passed, print the output of all installation 
+    steps to stdout.
     """
     return 0
 }

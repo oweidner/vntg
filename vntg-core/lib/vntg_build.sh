@@ -203,12 +203,6 @@ vntg_build () {
 done
 }
 
-
-underline=`tput smul`
-nounderline=`tput rmul`
-bold=`tput bold`
-normal=`tput sgr0`
-
 # ----------------------------------------------------------------------
 # Display help 
 #

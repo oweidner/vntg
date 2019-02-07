@@ -21,11 +21,6 @@ echo '  \     / /    |    \    | \    \_\  \'
 echo '   \___/  \____|__  /____|  \______  /'
 echo '                  \/               \/ '
 
-# ANSI escape sequences:
-# http://ascii-table.com/ansi-escape-sequences-vt-100.php
-TEXT_BOLD=$(tput bold)
-TEXT_RESET=$(tput sgr0)
-
 # ----------------------------------------------------------------------
 # Display error and exit
 #
