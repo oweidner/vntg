@@ -1,9 +1,9 @@
 package.name        = libressl
 package.description = Version of the SSL/TLS protocol forked from OpenSSL
 package.version     = 2.9.0
-package.location    = http://localhost:8000/vntg/openssh-7.9p1.tgz"
+package.location    = http://localhost:8000/vntg/libressl-2.9.0.tgz"
 package.variants    = n32,n64
-package.deps        = dummy-0.0.0,dummy2-0.0.0
+package.deps        = dummy-0.0.0
 
 package.src.location        = https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-2.9.0.tar.gz
 package.src.build.configure = --enable-nc

@@ -1,6 +1,8 @@
 #!/bin/sh
 
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_utils.sh
+. ${VNTG_SCRIPT_ROOT}/lib/vntg_config.sh
+
 
 # ----------------------------------------------------------------------
 # _is_installed: returns true if package is installed, false otherwise.
@@ -30,7 +32,7 @@ _get_deps_recursive() {
     local _package_version=$2
 
     if ! _is_installed ${_package_name} ${_package_version}; then
-        local _file="/Users/dkolewei/vntg/vntg-formulae/${_package_name}.vf" 
+        local _file="$VNTG_CFG_BASE/vntg-formulae/${_package_name}.vf" 
         [ ! -f "${_file}" ] && echo "Formula $_file not found." && exit -1
 
         local deps=$(grep '^package.deps' ${_file} | cut -f2 -d=)
@@ -58,7 +60,7 @@ _download_binary_package () {
     local _package_version=$2
 
     # Make sure file exists
-    local _file="/Users/dkolewei/vntg/vntg-formulae/${_package_name}.vf" 
+    local _file="$VNTG_CFG_BASE/vntg-formulae/${_package_name}.vf" 
     [ ! -f "${_file}" ] \
         && odie "Formula $_file not found." && exit -1
 
@@ -67,10 +69,34 @@ _download_binary_package () {
     [ -z ${_url} ] \
         && odie "package.location not defined in ${_file}" && exit -1
     
-    echo Downloading package from $_url
+    echo " o Downloading package from $_url"
+}
+
+# ----------------------------------------------------------------------
+# _unpack_binary_package: unpacks the tar archive into /opt/vntg/pkg/
+#  o param 1 <package_name>: name of the package to unpack
+#  o param 2 <package_version>: version of the package to unpack
+#
+_unpack_binary_package () {
+    local _package_name=$1
+    local _package_version=$2
+
+    echo " o Installing package into ${TEXT_B}/opt/vntg/${_package_name}/${_package_version}/${TEXT_R}"
 
 }
 
+# ----------------------------------------------------------------------
+# _display_notice: 
+#  o param 1 <package_name>: name of the package to unpack
+#  o param 2 <package_version>: version of the package to unpack
+#
+_activate_package () {
+    local _package_name=$1
+    local _package_version=$2
+
+    echo " o Linking package content into /opt/vntg/"
+
+}
 
 # ----------------------------------------------------------------------
 # Entry point for 'build'
@@ -79,7 +105,7 @@ vntg_install () {
 
     # TODO - parse arguments
     local _formula_name=$1
-    local _file="/Users/dkolewei/vntg/vntg-formulae/${_formula_name}.vf" 
+    local _file="$VNTG_CFG_BASE/vntg-formulae/${_formula_name}.vf" 
 
     if [ ! -f "${_file}" ]
     then
@@ -107,7 +133,7 @@ vntg_install () {
     # Remove first comma and last element from list as it is the package itself.
     dependency_list=$(echo $dependency_list | sed "s/,${package_name}//g" | tail -c +2)
 
-    echo "Detected missing dependencies for ${package_name}-${package_version}: ${bold}$dependency_list ${normal}"
+    echo "Missing dependencies for ${package_name}-${package_version}: ${bold}$dependency_list ${normal}"
     echo
 
     # Install missing dependencies
@@ -115,13 +141,19 @@ vntg_install () {
     for dep in $(echo $dependency_list | sed "s/,/ /g" )
     do
         echo "${TEXT_B}==>${TEXT_R} Installing ${package_name}-${package_version} dependency ${TEXT_B}${dep}${TEXT_R}"
-        _download_binary_package ${dep}
+        _download_binary_package ${dep} # exits on error - TODO: rollback
+        _unpack_binary_package ${dep}   # exits on error - TODO: rollback
+        _activate_package ${dep}   # exits on error - TODO: rollback
         echo
     done
 
-    # Install the requested package
+    # All dependencies are installed. Now we can finally 
+    # install the requested package
     echo "${TEXT_B}==>${TEXT_R} Installing package ${package_name}-${package_version}"
     _download_binary_package ${package_name} ${package_version}
+    _unpack_binary_package ${package_name} ${package_version}
+    _activate_package ${package_name} ${package_version}
+
 }
 
 

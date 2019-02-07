@@ -1,6 +1,6 @@
 #/bin/sh
 
-VNTG_SCRIPT_ROOT=/Users/dkolewei/vntg/vntg-core/
+VNTG_SCRIPT_ROOT=/Users/architeuthis/Projects/vntg/vntg-core/
 
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_build.sh
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_install.sh
@@ -12,7 +12,7 @@ VNTG_SCRIPT_ROOT=/Users/dkolewei/vntg/vntg-core/
 VINTAGE_VERSION="0.1.0"
 VINTAGE_ROOT="/opt/vntg/"
 VINTAGE_REPOSITORY_TYPE="local"
-VINTAGE_FORMULAE="/Users/dkolewei/vntg/vntg-formulae"
+VINTAGE_FORMULAE="/Users/architeuthis/Projects/vntg/vntg-formulae"
 
 echo '____   ______________________________ '
 echo '\   \ /   /\      \__    ___/  _____/ '
