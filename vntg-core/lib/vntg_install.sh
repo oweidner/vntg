@@ -3,47 +3,46 @@
 
 # ----------------------------------------------------------------------
 # _is_installed: returns true if package is installed, false otherwise.
-#  o param 1 <name>: package name to check
-#  o param 2 <version>: package version to check
+#  o param 1 <package_name>: package name to check
+#  o param 2 <package_version>: package version to check
 # 
 _is_installed() {
-    return 1
+    local _package_name=$1
+    local _package_version=$2
+
+    if [ -d "/opt/vntg/pkg/${_package_name}/${_package_version}" ]; then
+        # TODO: Check if packages is linked properly into /opt/vntg.
+        #       If not, suggest to run 'vntg relink'
+        return 0
+    else
+        return 1
+    fi
 }
 
 # ----------------------------------------------------------------------
-# _get_deps_recursive: retrieves all required and not installed packages
-#  o param 1 <name>: package name to check
+# _get_deps_recursive: retrieves a list of all required and missing packages
+#  o param 1 <package_name>: package name to get dependencies for
+#  o param 2 <package_version>: package version to get dependencies for
 #
 _get_deps_recursive() {
     
-    local _name=$1
+    local _package_name=$1
+    local _package_version=$2
 
-    local deps=$(grep '^package.deps' "/Users/dkolewei/vntg/vntg-formulae/${_name}.vf" | cut -f2 -d=)
-    for dep in $(echo $deps | sed "s/,/ /g")
-    do
-        _get_deps_recursive $(echo $dep | cut -f1 -d-)
-    done
+    if ! _is_installed ${_package_name} ${_package_version}; then
 
-    dependency_list=$dependency_list",$_name"
-    # echo $x
-
-
-    # local dep
-    # for dep in $(echo $package_deps | sed "s/,/ /g")
-    #     do
-    #         # split dependency into name and version
-    #         local dep_name=$(echo $dep | cut -f1 -d-)
-    #         local dep_version=$(echo $dep | cut -f2 -d-)
-
-    #         if ! _is_installed $dep_name $dep_version; then
-    #             echo " o ${dep} is missing"
-    #             _get_deps_recursive $dep_name $dep_version
-    #             #exit 1
-    #         else
-    #             echo " o ${dep} found"
-                
-    #         fi
-    #     done
+        local deps=$(grep '^package.deps' "/Users/dkolewei/vntg/vntg-formulae/${_package_name}.vf" | cut -f2 -d=)
+        local dep
+        for dep in $(echo $deps | sed "s/,/ /g")
+        do
+            local _name=$(echo $dep | cut -f1 -d-)
+            local _package=$(echo $dep | cut -f2 -d-)
+            _get_deps_recursive ${_name} ${_package}
+        done
+        dependency_list="${dependency_list},${_package_name}"
+    else
+        return
+    fi
 
 }
 
@@ -76,23 +75,26 @@ vntg_install () {
     package_version=$(echo ${package_version} | sed -e 's/^ *//g;s/ *$//g')
     package_location=$(echo ${package_location} | sed -e 's/^ *//g;s/ *$//g')
 
-    echo "${bold}==>${normal} Installing package ${package_name} ${package_version} from ${package_location}"
-
     # Recursively retrieve missing dependencies
     dependency_list=""
     _get_deps_recursive ${package_name} ${package_version}
-    echo "    Missing dependencies for ${package_name}: ${bold} $dependency_list ${normal}"
+    # TODO: Remove last element from list as it is the package itself.
+
+    echo "Detected missing dependencies for ${package_name}-${package_version}: ${bold} $dependency_list ${normal}"
+    echo
 
     # Install missing dependencies
     local dep
     for dep in $(echo $dependency_list | sed "s/,/ /g")
     do
-        echo "${bold}==>${normal} Installing ${package_name} ${package_version} dependency ${bold}${dep}${normal}"
+        echo "${bold}==>${normal} Installing ${package_name}-${package_version} dependency ${bold}${dep}${normal}"
         echo
     done
+
+    # Install the requested package
+    echo "${bold}==>${normal} Installing package ${package_name}-${package_version}"
+
 }
-
-
 
 
 # ----------------------------------------------------------------------
