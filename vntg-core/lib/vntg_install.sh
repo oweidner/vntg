@@ -15,39 +15,37 @@ _is_installed() {
 #  o param 1 <name>: package name to check
 #
 _get_deps_recursive() {
+    
     local _name=$1
 
     # extract dependecies from formula
     local deps=$(grep '^package.deps' "/Users/dkolewei/vntg/vntg-formulae/${_name}.vf" | cut -f2 -d=)
-    local dep
+    # echo "checking $deps"
     for dep in $(echo $deps | sed "s/,/ /g")
     do
-    echo $deps
-        local t=$(echo $dep | cut -f1 -d-)
-        _get_deps_recursive $(echo $t | cut -f1 -d-)
-        echo $dep
+        _get_deps_recursive $(echo $dep | cut -f1 -d-)
     done
 
+    dependency_list=$dependency_list",$_name"
+    # echo $x
 
 
-    exit
+    # local dep
+    # for dep in $(echo $package_deps | sed "s/,/ /g")
+    #     do
+    #         # split dependency into name and version
+    #         local dep_name=$(echo $dep | cut -f1 -d-)
+    #         local dep_version=$(echo $dep | cut -f2 -d-)
 
-    local dep
-    for dep in $(echo $package_deps | sed "s/,/ /g")
-        do
-            # split dependency into name and version
-            local dep_name=$(echo $dep | cut -f1 -d-)
-            local dep_version=$(echo $dep | cut -f2 -d-)
-
-            if ! _is_installed $dep_name $dep_version; then
-                echo " o ${dep} is missing"
-                _get_deps_recursive $dep_name $dep_version
-                #exit 1
-            else
-                echo " o ${dep} found"
+    #         if ! _is_installed $dep_name $dep_version; then
+    #             echo " o ${dep} is missing"
+    #             _get_deps_recursive $dep_name $dep_version
+    #             #exit 1
+    #         else
+    #             echo " o ${dep} found"
                 
-            fi
-        done
+    #         fi
+    #     done
 
 }
 
@@ -83,8 +81,9 @@ vntg_install () {
     echo "==> Installing package ${package_name} ${package_version} from ${package_location}"
 
     # Recursively retrieve missing dependencies
-    local dependency_list
+    dependency_list=""
     _get_deps_recursive ${package_name} ${package_version}
+    echo $dependency_list
 }
 
 
