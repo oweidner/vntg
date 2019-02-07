@@ -18,9 +18,7 @@ _get_deps_recursive() {
     
     local _name=$1
 
-    # extract dependecies from formula
     local deps=$(grep '^package.deps' "/Users/dkolewei/vntg/vntg-formulae/${_name}.vf" | cut -f2 -d=)
-    # echo "checking $deps"
     for dep in $(echo $deps | sed "s/,/ /g")
     do
         _get_deps_recursive $(echo $dep | cut -f1 -d-)
@@ -78,12 +76,20 @@ vntg_install () {
     package_version=$(echo ${package_version} | sed -e 's/^ *//g;s/ *$//g')
     package_location=$(echo ${package_location} | sed -e 's/^ *//g;s/ *$//g')
 
-    echo "==> Installing package ${package_name} ${package_version} from ${package_location}"
+    echo "${bold}==>${normal} Installing package ${package_name} ${package_version} from ${package_location}"
 
     # Recursively retrieve missing dependencies
     dependency_list=""
     _get_deps_recursive ${package_name} ${package_version}
-    echo $dependency_list
+    echo "    Missing dependencies for ${package_name}: ${bold} $dependency_list ${normal}"
+
+    # Install missing dependencies
+    local dep
+    for dep in $(echo $dependency_list | sed "s/,/ /g")
+    do
+        echo "${bold}==>${normal} Installing ${package_name} ${package_version} dependency ${bold}${dep}${normal}"
+        echo
+    done
 }
 
 
