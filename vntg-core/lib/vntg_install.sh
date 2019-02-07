@@ -80,6 +80,7 @@ vntg_install () {
     _get_deps_recursive ${package_name} ${package_version}
     # TODO: Remove last element from list as it is the package itself.
 
+
     echo "Detected missing dependencies for ${package_name}-${package_version}: ${bold} $dependency_list ${normal}"
     echo
 
