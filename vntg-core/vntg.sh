@@ -1,6 +1,6 @@
 #/bin/sh
 
-VNTG_SCRIPT_ROOT=/Users/architeuthis/Projects/vntg/vntg-core/
+#VNTG_SCRIPT_ROOT=/Users/architeuthis/Projects/vntg/vntg-core/
 
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_build.sh
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_install.sh

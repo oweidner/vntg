@@ -1,3 +1,3 @@
 #!/bin/bash
 
-VNTG_CFG_BASE="/Users/architeuthis/Projects/vntg/"
+VNTG_CFG_BASE="$VNTG_SCRIPT_ROOT/../"
