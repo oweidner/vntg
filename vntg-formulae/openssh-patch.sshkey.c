@@ -2744,14 +2744,14 @@ sshkey_format_cert_validity(const struct sshkey_cert *cert, char *s, size_t l)
 		/* XXX revisit INT_MAX in 2038 :) */
 		tt = cert->valid_after > INT_MAX ?
 		    INT_MAX : cert->valid_after;
-		tm = localtime(&tt);
+		tm = typesettime(&tt);
 		strftime(from, sizeof(from), "%Y-%m-%dT%H:%M:%S", tm);
 	}
 	if (cert->valid_before != 0xffffffffffffffffULL) {
 		/* XXX revisit INT_MAX in 2038 :) */
 		tt = cert->valid_before > INT_MAX ?
 		    INT_MAX : cert->valid_before;
-		tm = localtime(&tt);
+		tm = typesettime(&tt);
 		strftime(to, sizeof(to), "%Y-%m-%dT%H:%M:%S", tm);
 	}
 

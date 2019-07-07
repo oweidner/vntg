@@ -9,8 +9,8 @@
 #  o param 2 <package_version>: package version to check
 # 
 _is_installed() {
-    local _package_name=$1
-    local _package_version=$2
+    typeset _package_name=$1
+    typeset _package_version=$2
 
     if [ -d "/opt/vntg/pkg/${_package_name}/${_package_version}" ]; then
         # TODO: Check if packages is linked properly into /opt/vntg.
@@ -27,19 +27,19 @@ _is_installed() {
 #  o param 2 <package_version>: package version to get dependencies for
 #
 _get_deps_recursive() {
-    local _package_name=$1
-    local _package_version=$2
+    typeset _package_name=$1
+    typeset _package_version=$2
 
     if ! _is_installed ${_package_name} ${_package_version}; then
-        local _file="$VNTG_CFG_BASE/vntg-formulae/${_package_name}.vf" 
+        typeset _file="$VNTG_CFG_BASE/vntg-formulae/${_package_name}.vf" 
         [ ! -f "${_file}" ] && echo "Formula $_file not found." && exit -1
 
-        local deps=$(grep '^package.deps' ${_file} | cut -f2 -d=)
-        local dep
+        typeset deps=$(grep '^package.deps' ${_file} | cut -f2 -d=)
+        typeset dep
         for dep in $(echo $deps | sed "s/,/ /g")
         do
-            local _name=$(echo $dep | cut -f1 -d-)
-            local _package=$(echo $dep | cut -f2 -d-)
+            typeset _name=$(echo $dep | cut -f1 -d-)
+            typeset _package=$(echo $dep | cut -f2 -d-)
             _get_deps_recursive ${_name} ${_package}
         done
         dependency_list="${dependency_list},${_package_name}"
@@ -55,16 +55,16 @@ _get_deps_recursive() {
 #  o param 2 <package_version>: version of the package to download
 #
 _download_binary_package () {
-    local _package_name=$1
-    local _package_version=$2
+    typeset _package_name=$1
+    typeset _package_version=$2
 
     # Make sure file exists
-    local _file="$VNTG_CFG_BASE/vntg-formulae/${_package_name}.vf" 
+    typeset _file="$VNTG_CFG_BASE/vntg-formulae/${_package_name}.vf" 
     [ ! -f "${_file}" ] \
         && odie "Formula $_file not found." && exit -1
 
     # Make sure package.location is defined
-    local _url=$(grep '^package.location' ${_file} | cut -f2 -d=)
+    typeset _url=$(grep '^package.location' ${_file} | cut -f2 -d=)
     [ -z ${_url} ] \
         && odie "package.location not defined in ${_file}" && exit -1
     
@@ -77,8 +77,8 @@ _download_binary_package () {
 #  o param 2 <package_version>: version of the package to unpack
 #
 _unpack_binary_package () {
-    local _package_name=$1
-    local _package_version=$2
+    typeset _package_name=$1
+    typeset _package_version=$2
 
     echo " o Installing package into ${TEXT_B}/opt/vntg/${_package_name}/${_package_version}/${TEXT_R}"
 
@@ -90,8 +90,8 @@ _unpack_binary_package () {
 #  o param 2 <package_version>: version of the package to unpack
 #
 _activate_package () {
-    local _package_name=$1
-    local _package_version=$2
+    typeset _package_name=$1
+    typeset _package_version=$2
 
     echo " o Linking package content into /opt/vntg/"
 
@@ -103,8 +103,8 @@ _activate_package () {
 vntg_install () {
 
     # TODO - parse arguments
-    local _formula_name=$1
-    local _file="$VNTG_CFG_BASE/vntg-formulae/${_formula_name}.vf" 
+    typeset _formula_name=$1
+    typeset _file="$VNTG_CFG_BASE/vntg-formulae/${_formula_name}.vf" 
 
     if [ ! -f "${_file}" ]
     then
@@ -117,7 +117,7 @@ vntg_install () {
             [ -z $key ] && continue
 
             key=$(echo $key | tr '.' '_')
-            eval local ${key}=\${value}
+            eval typeset ${key}=\${value}
         done < "$_file"
     fi
 
@@ -136,7 +136,7 @@ vntg_install () {
     echo
 
     # Install missing dependencies
-    local dep
+    typeset dep
     for dep in $(echo $dependency_list | sed "s/,/ /g" )
     do
         echo "${TEXT_B}==>${TEXT_R} Installing ${package_name}-${package_version} dependency ${TEXT_B}${dep}${TEXT_R}"

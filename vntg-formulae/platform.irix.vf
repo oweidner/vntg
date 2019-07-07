@@ -41,7 +41,7 @@ platform.compiler.bin =
 
 __VNTG__PACKAGE_NAME="openssh"
 __VNTG__PACKAGE_VERSION="7.9p1"
-__VNTG__PACKAGE_LOCATION="http://localhost:8000/vntg/openssh-7.9p1.tgz"
+__VNTG__PACKAGE_LOCATION="http://typesethost:8000/vntg/openssh-7.9p1.tgz"
 __VNTG__PACKAGE_DEPS="libressl[2.9.0]"
 __VNTG__PACKAGE_POSTINSTALL=$(cat <<EOF
 # This links the init script from /opt/vntg to the appropriate \n

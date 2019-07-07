@@ -34,7 +34,7 @@ mkdir -p /opt/vntg/lib/pkgconfig/
 mkdir -p /opt/vntg/libexec/
 mkdir -p /opt/vntg/include/
 mkdir -p /opt/vntg/share/info/
-mkdir -p /opt/vntg/share/aclocal/
+mkdir -p /opt/vntg/share/actypeset/
 mkdir -p /opt/vntg/share/man/man1/
 mkdir -p /opt/vntg/share/man/man3/
 mkdir -p /opt/vntg/share/man/man5/
@@ -62,7 +62,7 @@ make install
 [ -d /opt/vntg/packages/${PACKAGE}/lib/pkgconfig ]  && ln -s /opt/vntg/packages/${PACKAGE}/lib/pkgconfig/*  /opt/vntg/lib/pkgconfig/
 [ -d /opt/vntg/packages/${PACKAGE}/libexec ]        && ln -s /opt/vntg/packages/${PACKAGE}/libexec/*        /opt/vntg/libexec/
 [ -d /opt/vntg/packages/${PACKAGE}/share/info ]     && ln -s /opt/vntg/packages/${PACKAGE}/share/info/*     /opt/vntg/share/info/
-[ -d /opt/vntg/packages/${PACKAGE}/share/aclocal ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/aclocal/*  /opt/vntg/share/aclocal/
+[ -d /opt/vntg/packages/${PACKAGE}/share/actypeset ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/actypeset/*  /opt/vntg/share/actypeset/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man1 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man1/* /opt/vntg/share/man/man1/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man3 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man3/* /opt/vntg/share/man/man3/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man5 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man5/* /opt/vntg/share/man/man5/
@@ -84,7 +84,7 @@ make install
 [ -d /opt/vntg/packages/${PACKAGE}/lib/pkgconfig ]  && ln -s /opt/vntg/packages/${PACKAGE}/lib/pkgconfig/*  /opt/vntg/lib/pkgconfig/
 [ -d /opt/vntg/packages/${PACKAGE}/libexec ]        && ln -s /opt/vntg/packages/${PACKAGE}/libexec/*        /opt/vntg/libexec/
 [ -d /opt/vntg/packages/${PACKAGE}/share/info ]     && ln -s /opt/vntg/packages/${PACKAGE}/share/info/*     /opt/vntg/share/info/
-[ -d /opt/vntg/packages/${PACKAGE}/share/aclocal ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/aclocal/*  /opt/vntg/share/aclocal/
+[ -d /opt/vntg/packages/${PACKAGE}/share/actypeset ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/actypeset/*  /opt/vntg/share/actypeset/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man1 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man1/* /opt/vntg/share/man/man1/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man3 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man3/* /opt/vntg/share/man/man3/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man5 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man5/* /opt/vntg/share/man/man5/
@@ -105,7 +105,7 @@ make install
 [ -d /opt/vntg/packages/${PACKAGE}/lib/pkgconfig ]  && ln -s /opt/vntg/packages/${PACKAGE}/lib/pkgconfig/*  /opt/vntg/lib/pkgconfig/
 [ -d /opt/vntg/packages/${PACKAGE}/libexec ]        && ln -s /opt/vntg/packages/${PACKAGE}/libexec/*        /opt/vntg/libexec/
 [ -d /opt/vntg/packages/${PACKAGE}/share/info ]     && ln -s /opt/vntg/packages/${PACKAGE}/share/info/*     /opt/vntg/share/info/
-[ -d /opt/vntg/packages/${PACKAGE}/share/aclocal ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/aclocal/*  /opt/vntg/share/aclocal/
+[ -d /opt/vntg/packages/${PACKAGE}/share/actypeset ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/actypeset/*  /opt/vntg/share/actypeset/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man1 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man1/* /opt/vntg/share/man/man1/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man3 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man3/* /opt/vntg/share/man/man3/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man5 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man5/* /opt/vntg/share/man/man5/
@@ -127,7 +127,7 @@ make install
 [ -d /opt/vntg/packages/${PACKAGE}/lib/pkgconfig ]  && ln -s /opt/vntg/packages/${PACKAGE}/lib/pkgconfig/*  /opt/vntg/lib/pkgconfig/
 [ -d /opt/vntg/packages/${PACKAGE}/libexec ]        && ln -s /opt/vntg/packages/${PACKAGE}/libexec/*        /opt/vntg/libexec/
 [ -d /opt/vntg/packages/${PACKAGE}/share/info ]     && ln -s /opt/vntg/packages/${PACKAGE}/share/info/*     /opt/vntg/share/info/
-[ -d /opt/vntg/packages/${PACKAGE}/share/aclocal ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/aclocal/*  /opt/vntg/share/aclocal/
+[ -d /opt/vntg/packages/${PACKAGE}/share/actypeset ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/actypeset/*  /opt/vntg/share/actypeset/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man1 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man1/* /opt/vntg/share/man/man1/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man3 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man3/* /opt/vntg/share/man/man3/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man5 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man5/* /opt/vntg/share/man/man5/
@@ -149,7 +149,7 @@ export PACKAGE=sudo-1.8.27
 [ -d /opt/vntg/packages/${PACKAGE}/lib/pkgconfig ]  && ln -s /opt/vntg/packages/${PACKAGE}/lib/pkgconfig/*  /opt/vntg/lib/pkgconfig/
 [ -d /opt/vntg/packages/${PACKAGE}/libexec ]        && ln -s /opt/vntg/packages/${PACKAGE}/libexec/*        /opt/vntg/libexec/
 [ -d /opt/vntg/packages/${PACKAGE}/share/info ]     && ln -s /opt/vntg/packages/${PACKAGE}/share/info/*     /opt/vntg/share/info/
-[ -d /opt/vntg/packages/${PACKAGE}/share/aclocal ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/aclocal/*  /opt/vntg/share/aclocal/
+[ -d /opt/vntg/packages/${PACKAGE}/share/actypeset ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/actypeset/*  /opt/vntg/share/actypeset/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man1 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man1/* /opt/vntg/share/man/man1/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man3 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man3/* /opt/vntg/share/man/man3/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man5 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man5/* /opt/vntg/share/man/man5/
@@ -170,7 +170,7 @@ export PACKAGE=libtasn1-4.13
 [ -d /opt/vntg/packages/${PACKAGE}/lib/pkgconfig ]  && ln -s /opt/vntg/packages/${PACKAGE}/lib/pkgconfig/*  /opt/vntg/lib/pkgconfig/
 [ -d /opt/vntg/packages/${PACKAGE}/libexec ]        && ln -s /opt/vntg/packages/${PACKAGE}/libexec/*        /opt/vntg/libexec/
 [ -d /opt/vntg/packages/${PACKAGE}/share/info ]     && ln -s /opt/vntg/packages/${PACKAGE}/share/info/*     /opt/vntg/share/info/
-[ -d /opt/vntg/packages/${PACKAGE}/share/aclocal ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/aclocal/*  /opt/vntg/share/aclocal/
+[ -d /opt/vntg/packages/${PACKAGE}/share/actypeset ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/actypeset/*  /opt/vntg/share/actypeset/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man1 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man1/* /opt/vntg/share/man/man1/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man3 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man3/* /opt/vntg/share/man/man3/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man5 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man5/* /opt/vntg/share/man/man5/
@@ -192,7 +192,7 @@ export PACKAGE=libressl-2.8.3
 [ -d /opt/vntg/packages/${PACKAGE}/lib/pkgconfig ]  && ln -s /opt/vntg/packages/${PACKAGE}/lib/pkgconfig/*  /opt/vntg/lib/pkgconfig/
 [ -d /opt/vntg/packages/${PACKAGE}/libexec ]        && ln -s /opt/vntg/packages/${PACKAGE}/libexec/*        /opt/vntg/libexec/
 [ -d /opt/vntg/packages/${PACKAGE}/share/info ]     && ln -s /opt/vntg/packages/${PACKAGE}/share/info/*     /opt/vntg/share/info/
-[ -d /opt/vntg/packages/${PACKAGE}/share/aclocal ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/aclocal/*  /opt/vntg/share/aclocal/
+[ -d /opt/vntg/packages/${PACKAGE}/share/actypeset ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/actypeset/*  /opt/vntg/share/actypeset/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man1 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man1/* /opt/vntg/share/man/man1/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man3 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man3/* /opt/vntg/share/man/man3/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man5 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man5/* /opt/vntg/share/man/man5/
@@ -214,7 +214,7 @@ export PACKAGE=openssh-7.9p1
 [ -d /opt/vntg/packages/${PACKAGE}/lib/pkgconfig ]  && ln -s /opt/vntg/packages/${PACKAGE}/lib/pkgconfig/*  /opt/vntg/lib/pkgconfig/
 [ -d /opt/vntg/packages/${PACKAGE}/libexec ]        && ln -s /opt/vntg/packages/${PACKAGE}/libexec/*        /opt/vntg/libexec/
 [ -d /opt/vntg/packages/${PACKAGE}/share/info ]     && ln -s /opt/vntg/packages/${PACKAGE}/share/info/*     /opt/vntg/share/info/
-[ -d /opt/vntg/packages/${PACKAGE}/share/aclocal ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/aclocal/*  /opt/vntg/share/aclocal/
+[ -d /opt/vntg/packages/${PACKAGE}/share/actypeset ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/actypeset/*  /opt/vntg/share/actypeset/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man1 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man1/* /opt/vntg/share/man/man1/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man3 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man3/* /opt/vntg/share/man/man3/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man5 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man5/* /opt/vntg/share/man/man5/
@@ -237,7 +237,7 @@ export PACKAGE=curl-7.63.0
 [ -d /opt/vntg/packages/${PACKAGE}/lib/pkgconfig ]  && ln -s /opt/vntg/packages/${PACKAGE}/lib/pkgconfig/*  /opt/vntg/lib/pkgconfig/
 [ -d /opt/vntg/packages/${PACKAGE}/libexec ]        && ln -s /opt/vntg/packages/${PACKAGE}/libexec/*        /opt/vntg/libexec/
 [ -d /opt/vntg/packages/${PACKAGE}/share/info ]     && ln -s /opt/vntg/packages/${PACKAGE}/share/info/*     /opt/vntg/share/info/
-[ -d /opt/vntg/packages/${PACKAGE}/share/aclocal ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/aclocal/*  /opt/vntg/share/aclocal/
+[ -d /opt/vntg/packages/${PACKAGE}/share/actypeset ]  && ln -s /opt/vntg/packages/${PACKAGE}/share/actypeset/*  /opt/vntg/share/actypeset/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man1 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man1/* /opt/vntg/share/man/man1/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man3 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man3/* /opt/vntg/share/man/man3/
 [ -d /opt/vntg/packages/${PACKAGE}/share/man/man5 ] && ln -s /opt/vntg/packages/${PACKAGE}/share/man/man5/* /opt/vntg/share/man/man5/

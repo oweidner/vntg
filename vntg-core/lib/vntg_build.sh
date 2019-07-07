@@ -1,12 +1,14 @@
 #!/bin/sh
 
+REPO_PATH="/Users/architeuthis/Code/vntg/vntg-formulae"
+CONFIG_FILE="/Users/architeuthis/Code/vntg/vntg-formulae/irix64-mips4-cc.cfg"
 
 # do_check_formula(): Parse a formula file
 #   o param 1: formula name
 #
 do_check_formula() {
     
-    local _formula_name=$1
+    typeset _formula_name=$1
 
     if [ ! -f "${FORMULAE}/${1}" ]
     then
@@ -39,8 +41,8 @@ do_check_formula() {
 #  o param 2 <version>: package version to check
 #
 do_check_dep() {
-    local _name=$1
-    local _version=$2
+    typeset _name=$1
+    typeset _version=$2
 
     if [ -d "/opt/vntg/pkg/${_name}/${_version}" ]; then
         # TODO: Check if packages is linked properly into /opt/vntg.
@@ -155,17 +157,27 @@ do_install_from_source () {
 # Entry point for 'build'
 #
 vntg_build () {
-    # Paramaters passed to the build command
+    # Parse build options. Adopted from
+    # https://stackoverflow.com/questions/4882349/parsing-shell-script-arguments#4882493
+    #
     if test $# -gt 0; then shift; fi
-    PARAMS=$*
 
-    # TODO - parse arguments
-    local _formula_name=$1
-    local _file="/opt/vntg/src/vntg/vntg-formulae/${_formula_name}.vf" 
+    while [[ $1 == -* ]]; do
+        case "$1" in
+        -h|--help|-\?) vntg_build_help; exit 0;;
+        -i|--install)  opt_install=1; shift;;
+        -d|--dist)     opt_dist=1; shift;;
+        --no-prune)    opt_noprune=1; shift;;
+        -v|--verbose)  opt_verbose=1; shift;;
+        -*) odie "Unknown option $1";;
+        esac
+    done
 
-    if [ ! -f "${_file}" ]
+    # Parse the build environment config file
+    # TODO: Move this to separate function
+    if [ ! -f "${CONFIG_FILE}" ]
     then
-        echo "Formula $_file not found."
+        echo "Build environment $CONFIG_FILE not found."
         exit -1
     else
         while IFS='=' read -r key value
@@ -174,8 +186,59 @@ vntg_build () {
             [ -z $key ] && continue
 
             key=$(echo $key | tr '.' '_')
-            eval local ${key}=\${value}
-        done < "$_file"
+            eval typeset ${key}=\${value}
+        done < "$CONFIG_FILE"
+
+        # Prune whitespaces
+        # TODO - find a more elegant solution
+        buildenv_name=$(echo ${buildenv_name} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_srcrep=$(echo ${buildenv_srcrep} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_pkgrep=$(echo ${buildenv_pkgrep} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_PATH=$(echo ${buildenv_PATH} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_LD_LIBRARY_PATH=$(echo ${buildenv_LD_LIBRARY_PATH} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_compiler_ABI=$(echo ${buildenv_compiler_ABI} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_compiler_CC=$(echo ${buildenv_compiler_CC} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_compiler_CFLAGS=$(echo ${buildenv_compiler_CFLAGS} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_compiler_CXX=$(echo ${buildenv_compiler_CXX} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_compiler_CXXFLAGS=$(echo ${buildenv_compiler_CXXFLAGS} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_compiler_CXX=$(echo ${buildenv_compiler_CXX} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_compiler_CXXFLAGS=$(echo ${buildenv_compiler_CXXFLAGS} | sed -e 's/^ *//g;s/ *$//g')
+        buildenv_linker_LDFLAGS=$(echo ${buildenv_linker_LDFLAGS} | sed -e 's/^ *//g;s/ *$//g')
+
+        echo ""
+        echo "${TEXT_B}Using environment ${buildenv_name}:${TEXT_R}"
+        echo ""
+        echo "  o Source repo     = "${buildenv_srcrep}
+        echo "  o Package repo    = "${buildenv_pkgrep}
+        echo "  o PATH            = "${buildenv_PATH}
+        echo "  o LD_LIBRARY_PATH = "${buildenv_LD_LIBRARY_PATH}
+        echo "  o ABI             = "${buildenv_compiler_ABI}
+        echo "  o CC              = "${buildenv_compiler_CC}
+        echo "  o CFLAGS          = "${buildenv_compiler_CFLAGS}
+        echo "  o CXX             = "${buildenv_compiler_CXX}
+        echo "  o CXXFLAGS        = "${buildenv_compiler_CXXFLAGS}
+        echo "  o LDFLAGS         = "${buildenv_linker_LDFLAGS}
+
+    fi
+
+
+    # TODO - fix the path.
+    typeset formula_name=$1
+    typeset formula_file="${REPO_PATH}/${formula_name}.vf" 
+
+    if [ ! -f "${formula_file}" ]
+    then
+        echo "Formula $formula_file not found."
+        exit -1
+    else
+        while IFS='=' read -r key value
+        do
+            # skip empty lines
+            [ -z $key ] && continue
+
+            key=$(echo $key | tr '.' '_')
+            eval typeset ${key}=\${value}
+        done < "$formula_file"
 
         package_name=$(echo ${package_name} | sed -e 's/^ *//g;s/ *$//g')
         package_deps=$(echo ${package_deps} | sed -e 's/^ *//g;s/ *$//g')
@@ -193,13 +256,13 @@ vntg_build () {
             configure="./configure --prefix=/opt/vntg/pkg/${package_name}/${package_version} --libdir=/opt/vntg/pkg/${package_name}/${package_version}/lib64 ${package_src_build_configure}"
         fi
 
-        echo "Building package:"
-        echo " o Package File     = " ${_file}
-        echo " o Package Name     = " ${package_name}
-        echo " o Package Version  = " ${package_version}
-        echo " o Package Location = " ${package_src_location}
-        echo " o Package Deps     = " ${package_src_build_deps}
-        echo " o Package Configure= " ${configure}
+        echo ""
+        echo "${TEXT_B}Building formula ${package_name} (${package_version}):${TEXT_R}"
+        echo ""
+        echo "  o Source location = " ${package_src_location}
+        echo "  o Dependencies    = " ${package_src_build_deps} ${package_deps}
+        echo "  o Config options  = " ${configure}
+        echo ""
 
     fi
 
@@ -232,10 +295,14 @@ vntg_build () {
     export PATH=/opt/vntg/bin:$PATH
     export PKG_CONFIG=/opt/vntg/bin/pkg-config
 
-    echo "==> pruning... "
     # prune dead links
-    #cd /opt/vntg/
-    #find * -type l -exec sh -c '! test -e $0 && unlink $0' {} \;
+    if [ "$opt_noprune" == "1" ]; then
+        echo "==> pruning... SKIPPED. "
+    else
+        echo "==> pruning... "
+        cd /opt/vntg/
+        find * -type l -exec sh -c '! test -e $0 && unlink $0' {} \;
+    fi 
 
 
     echo "==> unpacking"
@@ -271,20 +338,24 @@ vntg_build () {
 # Display help 
 #
 vntg_build_help () {
-    echo """${bold}vntg build${normal} [--install] [--dist] [--verbose] ${underline}formula${normal}:
+    echo """${TEXT_B}vntg build${TEXT_R} [options] ${TEXT_U}formula${TEXT_R}:
 
-    Build a formula from source
+    Build ${TEXT_U}formula${TEXT_R} from source.
 
-    ${underline}formula${normal} is the name of the formula to build.
+    ${TEXT_U}formula${TEXT_R} is the name of the formula to build.
 
-    If ${bold}--install${normal} is specified and the build was successfull the package 
-    is installed (linked) under /opt/vntg. 
+    ${TEXT_B}--install${TEXT_R}       Install ${TEXT_U}formula${TEXT_R} under /opt/vntg after the build was successful.
 
-    If ${bold}--dist${normal} is specified and the build was successfull the package 
-    is compressed into a distribution archive. 
+    ${TEXT_B}--dist${TEXT_R}          Create distribution archive after build was successful
 
-    If ${bold}--verbose${normal} (or -v) is passed, print the output of all build steps
-    to stdout.
+    ${TEXT_B}--no-prune${TEXT_R}      Omitt dead link pruning in /opt/vntg before build. 
+                    WARNING: this can lead to unwanted side-effects.
+
+    ${TEXT_B}--verbose${TEXT_R}       Print the output of all build steps to STDOUT.
+
+    ${TEXT_B}--help${TEXT_R}          Show this message.
+    --------------------------------------------------------------------------------
     """
+    
     return 0
 }

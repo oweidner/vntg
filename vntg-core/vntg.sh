@@ -1,6 +1,6 @@
-#!/sbin/ksh
+#!/bin/ksh
 
-VNTG_SCRIPT_ROOT=/opt/vntg/src/vntg/vntg-core/
+VNTG_SCRIPT_ROOT=/Users/architeuthis/Code/vntg/vntg-core
 
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_build.sh
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_install.sh
@@ -11,15 +11,15 @@ VNTG_SCRIPT_ROOT=/opt/vntg/src/vntg/vntg-core/
 
 VINTAGE_VERSION="0.1.0"
 VINTAGE_ROOT="/opt/vntg/"
-VINTAGE_REPOSITORY_TYPE="local"
-VINTAGE_FORMULAE="/Users/architeuthis/Projects/vntg/vntg-formulae"
+VINTAGE_REPOSITORY_TYPE="typeset"
+VINTAGE_FORMULAE="/Users/architeuthis/Code/vntg/vntg-formulae"
 
 echo '____   ______________________________ '
 echo '\   \ /   /\      \__    ___/  _____/ '
 echo ' \   Y   / /   |   \|    | /   \  ___ '
 echo '  \     / /    |    \    | \    \_\  \'
 echo '   \___/  \____|__  /____|  \______  /'
-echo '                  \/               \/ '
+echo '                  \/         v.0.1 \/ '
 
 # ----------------------------------------------------------------------
 # Display error and exit

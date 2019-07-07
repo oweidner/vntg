@@ -8,7 +8,7 @@
 
 do_check_formula() {
     
-    local _formula_name=$1
+    typeset _formula_name=$1
 
     if [ ! -f "${FORMULAE}/${1}" ]
     then
