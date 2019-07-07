@@ -1,0 +1,16 @@
+package.name                = perl
+package.description         = Highly capable, feature-rich programming language
+package.version             = 5.28.1
+package.location            = /opt/vntg/rep/vntg-perl-5.28.1.tar
+package.variants            = n32
+package.deps                = make-4.2.1, zlib-1.2.11
+
+package.src.location        = /opt/vntg-repo/src/perl-5.28.1.tar
+package.src.build.deps      = make-4.2.1, zlib-1.2.11
+package.src.build.configure = -des -Dprefix=/opt/vntg/pkg/perl/5.28.1
+package.src.build.configure.script = ./Configure 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog

@@ -1,0 +1,15 @@
+package.name                = gmp
+package.description         = GNU multiple precision arithmetic library
+package.version             = 6.1.2
+package.location            = /opt/vntg-repo/pgk/vntg-gmp-6.1.2.tar
+package.variants            = n32,n64
+package.deps                = 
+
+package.src.location        = /opt/vntg-repo/src/gmp-6.1.2.tar
+package.src.build.deps      = make, m4
+package.src.build.configure = 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,CREDITS,ChangeLog

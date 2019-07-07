@@ -4,11 +4,9 @@
 
 In addition to installing the vntg scrips, we also need to bootstrap a minimal
 set of tools that are required to download and install packages from the vntg
-repository. These tools and packages are:
+repository. These tools are:
 
   * **curl** for downloading files via ftp and http
-  * **gnu tar** for unpacking things
-  * **xz** for decompressing things
   * **git** for updating the vntg package repository
 
 The bootstrap process works as follows:

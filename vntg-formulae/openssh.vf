@@ -1,15 +1,16 @@
-package.name        = openssh
-package.description = OpenBSD freely-licensed SSH connectivity tools
-package.version     = 7.9p1
-package.location    = http://localhost:8000/vntg/openssh-7.9p1.tgz"
-package.variants    = n32,n64
-package.deps        = libressl-2.9.0
+package.name                = openssh
+package.description         = OpenSSL
+package.version             = 8.0p1
+package.location            = /opt/vntg/rep/vntg-openssh-8.0p1.tar
+package.variants            = n64
+package.deps                = zlib-1.2.11, openssl-1.1.1c,
 
-package.src.location        = https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.9p1.tar.gz
-package.src.build.deps      = make
-package.src.build.configure = --with-ssl-dir=/opt/vntg/pkg/libressl/2.9.0/ --with-pam --with-xauth
+package.src.location        = /opt/vntg-repo/src/openssh-8.0p1.tar
+package.src.build.deps      = make-4.2.1
+package.src.build.configure = --with-zlib=/opt/vntg/lib64  --with-ssl-dir=/opt/vntg/pkg/openssl/1.1.1c/ --with-xauth --with-prngd-socket=/dev/urandom --with-kerberos5=/opt/vntg
 package.src.build.cflags    = 
 package.src.build.cppflags  = 
 package.src.build.ldflags   = 
 pacakge.src.build.libs      = 
-pacakge.src.build.copyfiles = README,LICENCE,CREDITS,ChangeLog
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog
+package.src.build.note      =  must patch sshkey.c entropy.c

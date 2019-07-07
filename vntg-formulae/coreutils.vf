@@ -1,0 +1,17 @@
+package.name                = coreutils
+package.description         = GNU File, Shell, and Text utilities
+package.version             = 8.30
+package.location            = /opt/vntg-repo/pgk/vntg-coreutils-8.30.tar
+package.variants            = n32,n64
+package.deps                = gmp-6.1.2,libiconv-1.15
+
+package.src.location        = /opt/vntg-repo/src/coreutils-8.30.tar
+package.src.build.deps      = make,m4,gmp,libiconv
+package.src.build.configure = --with-libiconv-prefix=/opt/vntg/lib64 --with-openssl
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,CREDITS,ChangeLog
+package.src.build.note      = export FORCE_UNSAFE_CONFIGURE=1
+package.src.build.patch     = in lib/getthrxtime.h:42 ADD # include <time.h> AND in lib/gettimeofday:22 ADD #include <time.h> AND in Makefile replace src_b2sum_CPPFLAGS = -qinclude=config.h WITH src_b2sum_CPPFLAGS = -include=config.h

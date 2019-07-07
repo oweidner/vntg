@@ -1,3 +1,3 @@
 #!/bin/bash
 
-VNTG_CFG_BASE="$VNTG_SCRIPT_ROOT/../"
+VNTG_CFG_BASE="/opt/vntg/source/vntg/"

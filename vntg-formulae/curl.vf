@@ -1,0 +1,16 @@
+package.name                = curl
+package.description         = curl
+package.version             = 7.64.0
+package.location            = /opt/vntg/rep/curl-7.64.0.tar
+package.variants            = n64
+package.deps                = openssl-1.1.1c, zlib-1.2.11, libidn2-2.2.0
+
+package.src.location        = /opt/vntg-repo/src/curl-7.64.0.tar
+package.src.build.deps      = make-4.2.1, 
+package.src.build.configure = --enable-http --enable-ftp --enable-file --enable-tftp --enable-openssl-auto-load-config --enable-tls-srp --with-nghttp2 --enable-crypto-auth --enable-ipv6 --with-ca-fallback --with-libidn2=/opt/vntg/ 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog
+package.src.build.note      = 

@@ -1,11 +1,11 @@
-#/bin/sh
+#!/sbin/ksh
 
-#VNTG_SCRIPT_ROOT=/Users/architeuthis/Projects/vntg/vntg-core/
+VNTG_SCRIPT_ROOT=/opt/vntg/src/vntg/vntg-core/
 
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_build.sh
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_install.sh
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_help.sh
-# . ${VNTG_SCRIPT_ROOT}/lib/config.sh
+. ${VNTG_SCRIPT_ROOT}/lib/config.sh
 # . ${VNTG_SCRIPT_ROOT}/lib/search.sh
 # . ${VNTG_SCRIPT_ROOT}/lib/update.sh
 
@@ -77,7 +77,7 @@ case "$1" in
     vntg_build $*;;
 
   "") # If no command is given, the default it 'help'
-    vintage_help $*;;
+    vntg_help $*;;
 
   *) # Anything else will throw an error
     odie "Unknown command $1" ;;

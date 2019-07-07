@@ -1,0 +1,16 @@
+package.name                = libidn2
+package.description         = libidn2
+package.version             = 2.2.0
+package.location            = /opt/vntg/rep/libidn2-2.2.0.tar
+package.variants            = n64
+package.deps                = 
+
+package.src.location        = /opt/vntg-repo/src/libidn2-2.2.0.tar
+package.src.build.deps      = make-4.2.1, 
+package.src.build.configure = 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog
+package.src.build.note      = COPY cacert-2019-05-15.pem to /opt/vntg/etc/

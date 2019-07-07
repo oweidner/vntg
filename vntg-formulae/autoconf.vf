@@ -1,0 +1,15 @@
+package.name                = autoconf
+package.description         = autoconf
+package.version             = 2.69
+package.location            = /opt/vntg-repo/pgk/vntg-autoconf-2.69.tar
+package.variants            = n64
+package.deps                = 
+
+package.src.location        = /opt/vntg-repo/src/autoconf-2.69.tar
+package.src.build.deps      = make, m4
+package.src.build.configure = 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,CREDITS,ChangeLog

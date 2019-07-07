@@ -1,0 +1,15 @@
+package.name                = m4
+package.description         = GNU macro processing language
+package.version             = 1.4.18
+package.location            = /opt/vntg-repo/pgk/vntg-m4-1.4.18.tar
+package.variants            = n32,n64
+package.deps                = libsigsegv-2.12
+
+package.src.location        = /opt/vntg-repo/src/m4-1.4.18.tar
+package.src.build.deps      = libsigsegv-2.12, make
+package.src.build.configure = --with-libsigsegv-prefix=/opt/vntg --enable-c++ --enable-changeword
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog

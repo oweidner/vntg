@@ -1,0 +1,16 @@
+package.name                = krb5
+package.description         = MIT Kerberos 5
+package.version             = 1.17
+package.location            = /opt/vntg/rep/vntg-krb5-1.17.tar
+package.variants            = n64
+package.deps                = 
+
+package.src.location        = /opt/vntg-repo/src/krb5-1.17.tar
+package.src.build.deps      = make-4.2.1
+package.src.build.configure = 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog
+package.src.build.note      = need to set build dir to src/

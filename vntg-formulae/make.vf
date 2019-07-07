@@ -1,0 +1,15 @@
+package.name                = make
+package.description         = GNU utility for directing compilation
+package.version             = 4.2.1
+package.location            = /opt/vntg-repo/pgk/vntg-make-4.2.1.tar
+package.variants            = n32,n64
+package.deps                = libiconv-1.15
+
+package.src.location        = /opt/vntg-repo/src/make-4.2.1.tar
+package.src.build.deps      = libiconv-1.15
+package.src.build.configure = --with-libiconv-prefix=/opt/vntg/
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog

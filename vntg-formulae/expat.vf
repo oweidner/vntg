@@ -1,0 +1,16 @@
+package.name                = expat
+package.description         = expat
+package.version             = 2.2.6
+package.location            = /opt/vntg/rep/expat-2.2.6.tar
+package.variants            = n64
+package.deps                = 
+
+package.src.location        = /opt/vntg-repo/src/expat-2.2.6.tar
+package.src.build.deps      = make-4.2.1, 
+package.src.build.configure = 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog
+package.src.build.note      = 

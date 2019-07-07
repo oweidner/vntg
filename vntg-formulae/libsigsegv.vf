@@ -1,0 +1,15 @@
+package.name                = libsigsegv
+package.description         = Library for handling page faults in user mode
+package.version             = 2.12
+package.location            = /opt/vntg-repo/pgk/vntg-libsigsegv-2.12.tar
+package.variants            = n32,n64
+package.deps                = 
+
+package.src.location        = /opt/vntg-repo/src/libsigsegv-2.12.tar
+package.src.build.deps      = 
+package.src.build.configure = --with-libiconv-prefix=/opt/vntg/ --enable-shared
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog

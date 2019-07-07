@@ -1,0 +1,15 @@
+package.name                = vim
+package.description         = vim
+package.version             = 8.1
+package.location            = /opt/vntg-repo/pgk/vntg-vim-8.1.tar
+package.variants            = n64
+package.deps                = ncurses-6.1
+
+package.src.location        = /opt/vntg-repo/src/vim-8.1.tar
+package.src.build.deps      = make, m4
+package.src.build.configure = --with-features=huge --with-tlib=ncursesw
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,CREDITS,ChangeLog

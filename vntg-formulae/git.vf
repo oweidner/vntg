@@ -1,0 +1,16 @@
+package.name                = git
+package.description         = git
+package.version             = 2.20.1
+package.location            = /opt/vntg/rep/vntg-git-2.20.1.tar
+package.variants            = n64
+package.deps                = openssl-1.1.0j, zlib-1.2.11, expat-2.2.6, pcre2-10.32 zsh-5.7.1, curl-7.64.0
+
+package.src.location        = /opt/vntg-repo/src/git-2.20.1.tar
+package.src.build.deps      = make-4.2.1, 
+package.src.build.configure = --with-expat --with-curl --with-libpcre --with-shell=/opt/vntg/bin/zsh
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog
+package.src.build.note      = 

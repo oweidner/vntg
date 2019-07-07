@@ -1,0 +1,16 @@
+package.name                = libxml2
+package.description         = libxml2
+package.version             = 2.9.9
+package.location            = /opt/vntg/rep/vntg-libxml2-2.9.9.tar
+package.variants            = n64
+package.deps                = zlib-1.2.11, libiconv-1.15
+
+package.src.location        = /opt/vntg-repo/src/libxml2-2.9.9.tar
+package.src.build.deps      = make-4.2.1, 
+package.src.build.configure = --with-zlib --with-iconv
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog
+package.src.build.note      = 

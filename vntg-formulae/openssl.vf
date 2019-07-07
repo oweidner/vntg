@@ -1,0 +1,17 @@
+package.name                = openssl
+package.description         = OpenSSL
+package.version             = 1.1.1c
+package.location            = /opt/vntg/rep/vntg-openssl-1.1.1c.tar
+package.variants            = n64
+package.deps                = make-4.2.1, zlib-1.2.11
+
+package.src.location        = /opt/vntg-repo/src/openssl-1.1.1c.tar
+package.src.build.deps      = make-4.2.1, perl-5.28.1, zlib-1.2.11
+package.src.build.configure = irix64-mips4-cc zlib --openssldir=/opt/vntg/etc/ssl --prefix=/opt/vntg/pkg/openssl/1.1.1c --libdir=lib64 --with-zlib-include=/opt/vntg/include --with-zlib-lib=/opt/vntg/lib64  
+package.src.build.configure.script = ./Configure 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog
+package.src.build.note      = must run systune -b ncargs 262144 @@@NO : IN ENV VARS and vntg_build.sh - this breaks the buildsystem @@@

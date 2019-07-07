@@ -1,8 +1,7 @@
-#!/bin/sh
+#!/sbin/ksh
 
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_utils.sh
 . ${VNTG_SCRIPT_ROOT}/lib/vntg_config.sh
-
 
 # ----------------------------------------------------------------------
 # _is_installed: returns true if package is installed, false otherwise.
@@ -161,14 +160,17 @@ vntg_install () {
 # Display help 
 #
 vntg_install_help () {
-    echo """${TEXT_B}vntg install${TEXT_R} [--verbose] ${TEXT_U}formula${TEXT_R}:
+    echo """${TEXT_B}vntg install${TEXT_R} [--verbose] [--flavor] ${TEXT_U}package${TEXT_R}:
 
-    Install a formula as binary package.
+Install a binary package and its depdendencies.
 
-    ${TEXT_U}formula${TEXT_R} is the name of the formula to install.
+    ${TEXT_U}package${TEXT_R} is the name of the package to install.
 
-    If ${TEXT_B}--verbose${TEXT_R} (or -v) is passed, print the output of all installation 
-    steps to stdout.
+    If ${TEXT_B}--verbose${TEXT_R} (or -v) is passed, print the output of all 
+    installation steps to stdout.
+
+    If ${TEXT_B}--flavor${TEXT_R} (or -f) is passed, install a specific flavor 
+    of the package. [NOT IMPLEMENTED]
     """
     return 0
 }

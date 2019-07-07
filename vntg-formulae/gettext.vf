@@ -1,0 +1,16 @@
+package.name                = gettext
+package.description         = gettext
+package.version             = 0.19.8.1
+package.location            = /opt/vntg-repo/pgk/vntg-gettext-0.19.8.1.tar
+package.variants            = n32,n64
+package.deps                = libiconv-1.15, libxml2-2.9.9
+
+package.src.location        = /opt/vntg-repo/src/gettext-0.19.8.1.tar
+package.src.build.deps      = make, m4
+package.src.build.configure = 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,CREDITS,ChangeLog
+LOOKINTO: bzip2

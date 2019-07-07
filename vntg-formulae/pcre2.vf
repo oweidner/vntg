@@ -1,0 +1,16 @@
+package.name                = pcre2
+package.description         = pcre2
+package.version             = 10.32
+package.location            = /opt/vntg-repo/pgk/vntg-pcre2-10.32.tar
+package.variants            = n32,n64
+package.deps                = libiconv-1.15
+
+package.src.location        = /opt/vntg-repo/src/pcre2-10.32.tar
+package.src.build.deps      = make, m4
+package.src.build.configure = --enable-pcre2-32 --enable-pcre2-16 --enable-jit --enable-utf
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,CREDITS,ChangeLog
+LOOKINTO: bzip2

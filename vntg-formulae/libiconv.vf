@@ -1,0 +1,15 @@
+package.name                = libiconv
+package.description         = Character encoding conversion library
+package.version             = 1.15
+package.location            = /opt/vntg-repo/pgk/vntg-libiconv-1.15.tar"
+package.variants            = n32,n64
+package.deps                =
+
+package.src.location        = /opt/vntg-repo/src/libiconv-1.15.tar
+package.src.build.deps      = 
+package.src.build.configure = 
+package.src.build.cflags    = 
+package.src.build.cppflags  = 
+package.src.build.ldflags   = 
+pacakge.src.build.libs      = 
+pacakge.src.build.copyfiles = README,COPYING,THANKS,ChangeLog

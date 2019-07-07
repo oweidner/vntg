@@ -161,7 +161,7 @@ vntg_build () {
 
     # TODO - parse arguments
     local _formula_name=$1
-    local _file="/Users/dkolewei/vntg/vntg-formulae/${_formula_name}.vf" 
+    local _file="/opt/vntg/src/vntg/vntg-formulae/${_formula_name}.vf" 
 
     if [ ! -f "${_file}" ]
     then
@@ -177,12 +177,30 @@ vntg_build () {
             eval local ${key}=\${value}
         done < "$_file"
 
+        package_name=$(echo ${package_name} | sed -e 's/^ *//g;s/ *$//g')
+        package_deps=$(echo ${package_deps} | sed -e 's/^ *//g;s/ *$//g')
+        package_version=$(echo ${package_version} | sed -e 's/^ *//g;s/ *$//g')
+        package_src_location=$(echo ${package_src_location} | sed -e 's/^ *//g;s/ *$//g')
+        package_src_build_deps=$(echo ${package_src_build_deps} | sed -e 's/^ *//g;s/ *$//g')
+        package_src_build_configure=$(echo ${package_src_build_configure} | sed -e 's/^ *//g;s/ *$//g')
+        package_src_build_configure_script=$(echo ${package_src_build_configure_script} | sed -e 's/^ *//g;s/ *$//g')
+
+	# Use custom configure script if defined
+        if [ -n ${package_src_build_configure_script} ];
+        then 
+            configure="${package_src_build_configure_script} ${package_src_build_configure}"
+        else
+            configure="./configure --prefix=/opt/vntg/pkg/${package_name}/${package_version} --libdir=/opt/vntg/pkg/${package_name}/${package_version}/lib64 ${package_src_build_configure}"
+        fi
+
         echo "Building package:"
         echo " o Package File     = " ${_file}
         echo " o Package Name     = " ${package_name}
         echo " o Package Version  = " ${package_version}
-        echo " o Package Location = " ${package_location}
-        echo " o Package Deps     = " ${package_deps}
+        echo " o Package Location = " ${package_src_location}
+        echo " o Package Deps     = " ${package_src_build_deps}
+        echo " o Package Configure= " ${configure}
+
     fi
 
     # Check package build dependencies
@@ -199,8 +217,54 @@ vntg_build () {
             exit 1
         else
             echo " o ${dep} found"
-    fi
-done
+        fi
+    done
+
+    export ABI=64
+    export CC=c99
+    export CXX=CC
+    export CFLAGS='-64 -mips4 -c99 -O2 -LANG:anonymous_unions=ON -I/opt/vntg/include:/usr/include -L/opt/vntg/lib64 -L/usr/lib64'
+    export CXXFLAGS='-64 -mips4 -c99 -O2 -LANG:anonymous_unions=ON -I/opt/vntg/include:/usr/include -L/opt/vntg/lib64 -L/usr/lib64'
+    export CPPFLAGS='-64 -mips4 -c99 -O2 -LANG:anonymous_unions=ON -I/opt/vntg/include -L/opt/vntg/lib64 -L/usr/lib64'
+
+    export LD_LIBRARY_PATH='/opt/vntg/lib64:/usr/lib64'
+    export LDFLAGS='-64 -L/opt/vntg/lib64 -L/usr/lib64'
+    export PATH=/opt/vntg/bin:$PATH
+    export PKG_CONFIG=/opt/vntg/bin/pkg-config
+
+    echo "==> pruning... "
+    # prune dead links
+    #cd /opt/vntg/
+    #find * -type l -exec sh -c '! test -e $0 && unlink $0' {} \;
+
+
+    echo "==> unpacking"
+    mkdir -p "/tmp/vntg-build/"
+    cd /tmp/vntg-build/
+    cp ${package_src_location} /tmp/vntg-build/
+    tar xf /tmp/vntg-build/${package_name}-${package_version}.tar
+    rm /tmp/vntg-build/${package_name}-${package_version}.tar
+    cd /tmp/vntg-build/${package_name}-${package_version}/
+    ls /tmp/vntg-build/
+
+    [ -d /opt/vntg/pkg/${package_name}/${package_version}/ ] && echo "exists" && exit 1
+    
+    echo "==> configuring"
+    ${configure} || exit 1
+
+    make || exit 1
+    make install || exit 1
+
+    echo "==> activating"
+    # Create directory structure and symlinks in /opt/vntg/
+    cd /opt/vntg/pkg/${package_name}/${package_version}/
+    find . -type d -depth | cpio -dumpl /opt/vntg/
+    find * -type f -depth -exec sh -c 'ln -fs `pwd`/$0 /opt/vntg/$0' {} \;
+    find * -type l -depth -exec sh -c 'ln -fs `pwd`/$0 /opt/vntg/$0' {} \;
+
+    echo "==> packaging"
+    cd /opt/vntg/pkg/
+    tar cf /opt/vntg/rep/vntg-${package_name}-${package_version}-n64.tar ${package_name}/${package_version}
 }
 
 # ----------------------------------------------------------------------
